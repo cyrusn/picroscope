@@ -1,5 +1,6 @@
 import smtplib
 from email.message import EmailMessage
+from os import path
 
 import getpass
 
@@ -47,7 +48,7 @@ class Email:
         with open(filename, "rb") as fp:
             img_data = fp.read()
             self.message.add_attachment(
-                img_data, maintype="image", subtype="png", filename=filename
+                img_data, maintype="image", subtype="png", filename=path.basename(filename)
             )
             fp.close()
 
@@ -57,4 +58,3 @@ class Email:
 
     def close(self):
         self.server.close()
-
