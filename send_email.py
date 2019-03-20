@@ -39,4 +39,4 @@ class Email:
 
     def send(self):
         self.server.send_message(self.message)
-        print("Image is sent successfully.")
+        print("Image is sent successfully to {}.".format(self.recipient))

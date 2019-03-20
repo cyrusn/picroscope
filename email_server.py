@@ -1,9 +1,9 @@
-import smtplib
+from smtplib import SMTP, SMTPAuthenticationError
 
 
 class Server:
     def __init__(self, smtp, port):
-        self.server = smtplib.SMTP(smtp, port)
+        self.server = SMTP(smtp, port)
 
     def login(self, username, password):
         try:
@@ -12,9 +12,12 @@ class Server:
             self.server.login(username, password)
             self.username = username
             print("Successful login")
-        except smtplib.SMTPAuthenticationError:
+        except SMTPAuthenticationError:
             print("Invalid login credential")
             exit()
+            
+    def send_message(self, message):
+        self.server.send_message(message)
 
     def close(self):
         self.server.close()
