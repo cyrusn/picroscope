@@ -46,6 +46,7 @@ def send_image():
         except SMTPRecipientsRefused:
             print('Invalid email address')
 
+    print()
 
 left_button.when_pressed = picroscope.toggle_preview
 right_button.when_pressed = send_image
