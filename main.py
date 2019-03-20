@@ -40,13 +40,12 @@ def send_image():
         email.subject = EMAIL_SUBJECT
         email.recipient = input("Recipient: ")
         email.add_attachment(filename)
-        
+
         try:
             email.send()
         except SMTPRecipientsRefused:
-            print('Invalid email address')
+            print("Invalid email address")
 
-    print()
 
 left_button.when_pressed = picroscope.toggle_preview
 right_button.when_pressed = send_image

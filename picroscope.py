@@ -23,7 +23,7 @@ class Picroscope:
     def capture(self):
         if self.preview:
             now = datetime.now().isoformat()
-            file = path.join(self.captureDir, format(now)+ ".jpg")
+            file = path.join(self.captureDir, format(now) + ".jpg")
             print("Image Captured: ", file)
             self.camera.capture(file)
             return file
