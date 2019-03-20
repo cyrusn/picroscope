@@ -1,32 +1,14 @@
-import smtplib
 from email.message import EmailMessage
 from os import path
 
 import getpass
 
-SMTP = "smtp.gmail.com"
-SMTP_PORT = 587
-
 
 class Email:
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
+    def __init__(self, server):
+        self.server = server
         self.message = EmailMessage()
-        self.sender = username
-
-        self.message["From"] = self.sender
-
-    def login(self):
-        try:
-            self.server = smtplib.SMTP(SMTP, SMTP_PORT)
-            self.server.ehlo()
-            self.server.starttls()
-            self.server.login(self.username, self.password)
-            print("Successful login")
-        except smtplib.SMTPAuthenticationError:
-            print("Invalid login credential")
-            exit()
+        self.message["From"] = server.username
 
     @property
     def subject(self):
@@ -48,13 +30,13 @@ class Email:
         with open(filename, "rb") as fp:
             img_data = fp.read()
             self.message.add_attachment(
-                img_data, maintype="image", subtype="png", filename=path.basename(filename)
+                img_data,
+                maintype="image",
+                subtype="png",
+                filename=path.basename(filename),
             )
             fp.close()
 
     def send(self):
         self.server.send_message(self.message)
-        print("Message is sent successfully.")
-
-    def close(self):
-        self.server.close()
+        print("Image is sent successfully.")

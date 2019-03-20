@@ -2,8 +2,11 @@ from gpiozero import Button, LED
 from signal import pause
 
 from send_email import Email
+from email_server import Server
 from picroscope import Picroscope
-from email.utils import parseaddr
+
+SMTP = "smtp.gmail.com"
+SMTP_PORT = 587
 
 from constant import GMAIL_USER, GMAIL_PASSWORD
 
@@ -19,25 +22,24 @@ right_button = Button(RIGHT_BUTTON_PIN)
 
 # initiation`
 
-picroscope = Picroscope(led=led,captureDir=CAPTURE_DIR)
+picroscope = Picroscope(led=led, captureDir=CAPTURE_DIR)
 print(picroscope.help_text)
 
-email = Email(GMAIL_USER, GMAIL_PASSWORD)
-email.login()
+server = Server(SMTP, SMTP_PORT)
+server.login(GMAIL_USER, GMAIL_PASSWORD)
 
 
 def captureAndSendEmail():
     filename = picroscope.capture()
     if filename is not None:
         picroscope.toggle_preview()
-        email.subject = "STEM 「語文」同樂日 - 顯微鏡DIY"
-        recipient = input("Recipient: ")
-        address = parseaddr(recipient)
-        print(address)
-#        if address[1] != "":
-#            email.recipient = recipient
-#            email.add_attachment(filename)
-#            email.send()
+
+        email = Email(server)
+        email.subject = "STEM 「語文」同樂日 -- 顯微鏡 DIY"
+        email.recipient = input("Recipient: ")
+        email.add_attachment(filename)
+        email.send()
+
 
 left_button.when_pressed = picroscope.toggle_preview
 right_button.when_pressed = captureAndSendEmail
