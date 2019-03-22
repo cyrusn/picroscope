@@ -23,17 +23,19 @@ led = LED(LED_PIN)
 left_button = Button(LEFT_BUTTON_PIN)
 right_button = Button(RIGHT_BUTTON_PIN)
 
-
 picroscope = Picroscope(led=led, captureDir=CAPTURE_DIR)
-print(picroscope.help_text)
 
 server = Server(SMTP, SMTP_PORT)
 server.login(GMAIL_USER, GMAIL_PASSWORD)
 
+print()
+print(picroscope.help_text)
 
 def send_image():
+    print()
     filename = picroscope.capture()
     if filename is not None:
+
         picroscope.toggle_preview()
 
         email = Email(server)
@@ -42,9 +44,10 @@ def send_image():
         email.add_attachment(filename)
 
         try:
+            print('Please wait ...')
             email.send()
         except SMTPRecipientsRefused:
-            print("Invalid email address")
+            print("Invalid email address.")
 
 
 left_button.when_pressed = picroscope.toggle_preview

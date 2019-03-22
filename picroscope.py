@@ -42,6 +42,6 @@ class Picroscope:
     def help_text(self):
         return (
             "Press left button to start preview.\n"
-            + "Press right button while previewing to capture image.\n"
-            + "Press ctrl-C to stop the programme."
+            + "Press right button to send the image.\n"
+            + "Press ctrl-C to quit the programme."
         )

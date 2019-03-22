@@ -11,9 +11,9 @@ class Server:
             self.server.starttls()
             self.server.login(username, password)
             self.username = username
-            print("Successful login")
+            print("Successfully login.")
         except SMTPAuthenticationError:
-            print("Invalid login credential")
+            print("Invalid login credential.")
             exit()
             
     def send_message(self, message):
