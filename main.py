@@ -31,11 +31,10 @@ server.login(GMAIL_USER, GMAIL_PASSWORD)
 print()
 print(picroscope.help_text)
 
+
 def send_image():
-    print()
     filename = picroscope.capture()
     if filename is not None:
-
         picroscope.toggle_preview()
 
         email = Email(server)
@@ -43,8 +42,9 @@ def send_image():
         email.recipient = input("Recipient: ")
         email.add_attachment(filename)
 
+        print()
         try:
-            print('Please wait ...')
+            print("Please wait ...")
             email.send()
         except SMTPRecipientsRefused:
             print("Invalid email address.")
